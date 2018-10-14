@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.hbpu.recruitment.mapper.ResumeinformationMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.hbpu.recruitment.pojo.Resumeinformation" >
+    <id column="resumeId" property="resumeid" jdbcType="INTEGER" />
+    <result column="personId" property="personid" jdbcType="INTEGER" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="workType" property="worktype" jdbcType="INTEGER" />
+    <result column="expectedPosition" property="expectedposition" jdbcType="VARCHAR" />
+    <result column="expectedSalary" property="expectedsalary" jdbcType="VARCHAR" />
+    <result column="schoolName" property="schoolname" jdbcType="VARCHAR" />
+    <result column="professional" property="professional" jdbcType="VARCHAR" />
+    <result column="beginYear" property="beginyear" jdbcType="VARCHAR" />
+    <result column="endYear" property="endyear" jdbcType="VARCHAR" />
+    <result column="selfDescription" property="selfdescription" jdbcType="VARCHAR" />
+    <result column="workUrl" property="workurl" jdbcType="VARCHAR" />
+    <result column="explanatoryText" property="explanatorytext" jdbcType="VARCHAR" />
+    <result column="resumeAttachments" property="resumeattachments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    resumeId, personId, city, workType, expectedPosition, expectedSalary, schoolName, 
+    professional, beginYear, endYear, selfDescription, workUrl, explanatoryText, resumeAttachments
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.hbpu.recruitment.pojo.ResumeinformationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resumeinformation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from resumeinformation
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from resumeinformation
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.hbpu.recruitment.pojo.ResumeinformationExample" >
+    delete from resumeinformation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.hbpu.recruitment.pojo.Resumeinformation" >
+    insert into resumeinformation (resumeId, personId, city, 
+      workType, expectedPosition, expectedSalary, 
+      schoolName, professional, beginYear, 
+      endYear, selfDescription, workUrl, 
+      explanatoryText, resumeAttachments)
+    values (#{resumeid,jdbcType=INTEGER}, #{personid,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
+      #{worktype,jdbcType=INTEGER}, #{expectedposition,jdbcType=VARCHAR}, #{expectedsalary,jdbcType=VARCHAR}, 
+      #{schoolname,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR}, #{beginyear,jdbcType=VARCHAR}, 
+      #{endyear,jdbcType=VARCHAR}, #{selfdescription,jdbcType=VARCHAR}, #{workurl,jdbcType=VARCHAR}, 
+      #{explanatorytext,jdbcType=VARCHAR}, #{resumeattachments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.hbpu.recruitment.pojo.Resumeinformation" >
+    insert into resumeinformation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resumeid != null" >
+        resumeId,
+      </if>
+      <if test="personid != null" >
+        personId,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="worktype != null" >
+        workType,
+      </if>
+      <if test="expectedposition != null" >
+        expectedPosition,
+      </if>
+      <if test="expectedsalary != null" >
+        expectedSalary,
+      </if>
+      <if test="schoolname != null" >
+        schoolName,
+      </if>
+      <if test="professional != null" >
+        professional,
+      </if>
+      <if test="beginyear != null" >
+        beginYear,
+      </if>
+      <if test="endyear != null" >
+        endYear,
+      </if>
+      <if test="selfdescription != null" >
+        selfDescription,
+      </if>
+      <if test="workurl != null" >
+        workUrl,
+      </if>
+      <if test="explanatorytext != null" >
+        explanatoryText,
+      </if>
+      <if test="resumeattachments != null" >
+        resumeAttachments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resumeid != null" >
+        #{resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="personid != null" >
+        #{personid,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="worktype != null" >
+        #{worktype,jdbcType=INTEGER},
+      </if>
+      <if test="expectedposition != null" >
+        #{expectedposition,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedsalary != null" >
+        #{expectedsalary,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolname != null" >
+        #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="beginyear != null" >
+        #{beginyear,jdbcType=VARCHAR},
+      </if>
+      <if test="endyear != null" >
+        #{endyear,jdbcType=VARCHAR},
+      </if>
+      <if test="selfdescription != null" >
+        #{selfdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="workurl != null" >
+        #{workurl,jdbcType=VARCHAR},
+      </if>
+      <if test="explanatorytext != null" >
+        #{explanatorytext,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeattachments != null" >
+        #{resumeattachments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.hbpu.recruitment.pojo.ResumeinformationExample" resultType="java.lang.Integer" >
+    select count(*) from resumeinformation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update resumeinformation
+    <set >
+      <if test="record.resumeid != null" >
+        resumeId = #{record.resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.personid != null" >
+        personId = #{record.personid,jdbcType=INTEGER},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.worktype != null" >
+        workType = #{record.worktype,jdbcType=INTEGER},
+      </if>
+      <if test="record.expectedposition != null" >
+        expectedPosition = #{record.expectedposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectedsalary != null" >
+        expectedSalary = #{record.expectedsalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolname != null" >
+        schoolName = #{record.schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professional != null" >
+        professional = #{record.professional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginyear != null" >
+        beginYear = #{record.beginyear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endyear != null" >
+        endYear = #{record.endyear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfdescription != null" >
+        selfDescription = #{record.selfdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workurl != null" >
+        workUrl = #{record.workurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.explanatorytext != null" >
+        explanatoryText = #{record.explanatorytext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeattachments != null" >
+        resumeAttachments = #{record.resumeattachments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update resumeinformation
+    set resumeId = #{record.resumeid,jdbcType=INTEGER},
+      personId = #{record.personid,jdbcType=INTEGER},
+      city = #{record.city,jdbcType=VARCHAR},
+      workType = #{record.worktype,jdbcType=INTEGER},
+      expectedPosition = #{record.expectedposition,jdbcType=VARCHAR},
+      expectedSalary = #{record.expectedsalary,jdbcType=VARCHAR},
+      schoolName = #{record.schoolname,jdbcType=VARCHAR},
+      professional = #{record.professional,jdbcType=VARCHAR},
+      beginYear = #{record.beginyear,jdbcType=VARCHAR},
+      endYear = #{record.endyear,jdbcType=VARCHAR},
+      selfDescription = #{record.selfdescription,jdbcType=VARCHAR},
+      workUrl = #{record.workurl,jdbcType=VARCHAR},
+      explanatoryText = #{record.explanatorytext,jdbcType=VARCHAR},
+      resumeAttachments = #{record.resumeattachments,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.hbpu.recruitment.pojo.Resumeinformation" >
+    update resumeinformation
+    <set >
+      <if test="personid != null" >
+        personId = #{personid,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="worktype != null" >
+        workType = #{worktype,jdbcType=INTEGER},
+      </if>
+      <if test="expectedposition != null" >
+        expectedPosition = #{expectedposition,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedsalary != null" >
+        expectedSalary = #{expectedsalary,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolname != null" >
+        schoolName = #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        professional = #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="beginyear != null" >
+        beginYear = #{beginyear,jdbcType=VARCHAR},
+      </if>
+      <if test="endyear != null" >
+        endYear = #{endyear,jdbcType=VARCHAR},
+      </if>
+      <if test="selfdescription != null" >
+        selfDescription = #{selfdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="workurl != null" >
+        workUrl = #{workurl,jdbcType=VARCHAR},
+      </if>
+      <if test="explanatorytext != null" >
+        explanatoryText = #{explanatorytext,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeattachments != null" >
+        resumeAttachments = #{resumeattachments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.hbpu.recruitment.pojo.Resumeinformation" >
+    update resumeinformation
+    set personId = #{personid,jdbcType=INTEGER},
+      city = #{city,jdbcType=VARCHAR},
+      workType = #{worktype,jdbcType=INTEGER},
+      expectedPosition = #{expectedposition,jdbcType=VARCHAR},
+      expectedSalary = #{expectedsalary,jdbcType=VARCHAR},
+      schoolName = #{schoolname,jdbcType=VARCHAR},
+      professional = #{professional,jdbcType=VARCHAR},
+      beginYear = #{beginyear,jdbcType=VARCHAR},
+      endYear = #{endyear,jdbcType=VARCHAR},
+      selfDescription = #{selfdescription,jdbcType=VARCHAR},
+      workUrl = #{workurl,jdbcType=VARCHAR},
+      explanatoryText = #{explanatorytext,jdbcType=VARCHAR},
+      resumeAttachments = #{resumeattachments,jdbcType=VARCHAR}
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </update>
+</mapper>

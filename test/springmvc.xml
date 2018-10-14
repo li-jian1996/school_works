@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+
+
+	<!-- 扫描哪个包下（包含子包）的类包含bean的注解 -->
+	<context:component-scan base-package="cn.edu.hbpu.recruitment.controller"></context:component-scan>
+	<mvc:annotation-driven></mvc:annotation-driven>
+  <!--  
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="suffix" value=".jsp" />
+	</bean>
+ -->
+	<bean class="cn.edu.hbpu.recruitment.util.CustomExceptionResolver"></bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**" />
+			<bean class="cn.edu.hbpu.recruitment.util.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5000000" />
+	</bean>
+	<mvc:resources location="/style/js/" mapping="/style/js/**"></mvc:resources>
+	<mvc:resources location="/style/css/" mapping="/style/css/**"></mvc:resources>
+	<mvc:resources location="/style/css/img" mapping="/style/css/img/**"></mvc:resources>
+	<mvc:resources location="/fckeditor/" mapping="/fckeditor/**"></mvc:resources>
+	<mvc:resources location="/fonts/" mapping="/fonts/**"></mvc:resources>
+	<mvc:resources location="/style/imgages/" mapping="/style/imgages/**"></mvc:resources>
+	<mvc:resources location="/admin/css/" mapping="/admin/css/**"></mvc:resources>
+	<mvc:resources location="/admin/img/" mapping="/admin/img/**"></mvc:resources>
+    
+    <!-- 处理responseBody 里面日期类型-->
+	<mvc:annotation-driven >
+	<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd " />
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+	</mvc:message-converters>
+	</mvc:annotation-driven>
+	 
+	 <!--  
+	<mvc:annotation-driven conversion-service="conversionService" />
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="registerDefaultFormatters" value="true" />
+        <property name="formatterRegistrars">
+            <set>
+                <bean class="org.springframework.format.datetime.DateFormatterRegistrar">
+                    <property name="formatter" ref="dateFormatter"></property>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="dateFormatter" class="org.springframework.format.datetime.DateFormatter">
+        <property name="pattern" value="yyyy-MM-dd"></property>
+    </bean>
+    -->
+     
+</beans>
